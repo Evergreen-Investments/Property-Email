@@ -5,19 +5,23 @@ The property email workflows and functions allow users to add to the related lis
 ## Solution Creation
 1. Go into Deals > Deal Record > Select Property > Choose Specific Property and add to the field > Send Email and select yes. The field will be automatically changed to no when the tab is refreshed. 
 
-![image](https://user-images.githubusercontent.com/124835926/217658823-3d99df7b-75d7-44d8-a3c9-04a7b04c102c.png)
+![image](https://user-images.githubusercontent.com/124835926/224374285-f97836bc-6bf5-4390-808d-f683e799dc13.png)
 
-2. Find the APIs used for each field, so you are able to access that field in the IDE. Go to Settings > Developer Space > APIs > PropertyDatabase and find "Conservative Net to Seller" and "Seller's Desired Net" API names
-
-![image](https://user-images.githubusercontent.com/124835926/217661510-ec6d4efc-4bcd-442d-ae47-9e75cf3136e0.png)
-![image](https://user-images.githubusercontent.com/124835926/217661572-f643a7c4-f320-4b5b-8dac-94f7d6562d54.png)
+![image](https://user-images.githubusercontent.com/124835926/224374113-15f0462c-7c70-4faa-ac05-5899ae29120c.png)
 
 
-3. Edit the arguments and made the “key” name and Property_ID. This would allow us in the first line to access all the information of each account by using "getRecordBy"
+2. This will then trigger workflows that will then create a record in the DealsxProperties module. Duplicate records will not be created because a unique ID that combines the property id and deal id is created so it will not send duplicate emails or records. 
+
+![image](https://user-images.githubusercontent.com/124835926/224375033-c76f8cda-4f10-4b94-97a2-f6f0494652ab.png)
+
+![image](https://user-images.githubusercontent.com/124835926/224374833-b2d9882f-c6e1-4ab5-85ad-999627aae136.png))
+
+
+3. Once the record is created, a workflow is triggered that sends an email out to the contact email of the deal.
+4. 
 ![image](https://user-images.githubusercontent.com/124835926/217657957-6f305653-640c-4887-ba43-a0d6d8d105c2.png)
-```bash
-Recs = zoho.crm.getRecordById("PropertyDatabase", Property_ID);
-```
+
+![image](https://user-images.githubusercontent.com/124835926/224375369-acc78576-6a52-4c76-9cfd-f39bf047292b.png)
 4.Create a variable “SellerDN” where we accessed the sellers desired net by using “get” and finding the corresponding APIs.
 ```bash
 SellerDN = Recs.get("Asking_Price");
@@ -52,7 +56,7 @@ if ( SellerDN <= ConNTS)
 Update = zoho.crm.updateRecord("PropertyDatabase",Property_ID,Status_Update,{"trigger":{"workflow"}});
 ```
 
-## Diagram
+## Diagrams
 ![image](https://user-images.githubusercontent.com/124835926/224370641-fe2eb6a1-5e56-4792-81b7-fad54e7588eb.png)
 ![image](https://user-images.githubusercontent.com/124835926/224372931-82759e6c-ef8e-47fd-bfb2-238e5cb78c51.png)
 
