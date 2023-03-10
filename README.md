@@ -54,6 +54,7 @@ Update = zoho.crm.updateRecord("PropertyDatabase",Property_ID,Status_Update,{"tr
 
 ## Diagram
 ![image](https://user-images.githubusercontent.com/124835926/224370641-fe2eb6a1-5e56-4792-81b7-fad54e7588eb.png)
-![image](https://user-images.githubusercontent.com/124835926/224372008-a9429582-57e1-4ea5-b44b-8b2be2e9a10e.png)
+![image](https://user-images.githubusercontent.com/124835926/224372931-82759e6c-ef8e-47fd-bfb2-238e5cb78c51.png)
+
 
 
