@@ -1,0 +1,49 @@
+//Gets Record of Deal
+Deal = invokeurl
+[
+	url :"https://www.zohoapis.com/crm/v3/Deals/" + Deals_ID
+	type :GET
+	connection:"crm2craigslist"
+];
+//Gets all data using the JSON on the deal record	
+get_data = Deal.getJson("data");
+//Gets the related list called Properties from the Deal records
+property = ifnull(get_data.getJson("Property"),List());
+Send_Property_Email = ifnull(get_data.getJson("Send_Property_Email"),List());
+//Checks to see if Send Email Field is Checked
+if(Send_Property_Email == "Yes")
+{
+	//Goes through each Property in the related list and creates a record in the new module 
+	for each  Namess in property
+	{
+		pid = ifnull(ifnull(Namess.getJSON("Property"),Map()).getJSON("id"),"");
+		//Concatnates deals ID and porperty id to create new id 
+		RecordID = Deals_ID + pid;
+		Names = zoho.crm.getRecordById("PropertyDatabase",pid);
+		mp = Map();
+		mp.put("Name",ifnull(Names.getJson("Name"),""));
+		mp.put("Baths",ifnull(Names.getJson("Baths"),""));
+		mp.put("Beds",ifnull(Names.getJson("Beds"),""));
+		mp.put("Postal_Code",ifnull(Names.getJson("Postal_Code"),""));
+		mp.put("Year_Built",ifnull(Names.getJson("Year_Built"),""));
+		mp.put("Workdrive_Photos",ifnull(Names.getJson("Workdrive_Photos"),""));
+		mp.put("Lot_Size_Acres",ifnull(Names.getJson("Lot_Size_Acres"),""));
+		mp.put("Occupancy_at_Closing",ifnull(Names.getJson("Occupancy_at_Closing"),""));
+		mp.put("Square_Feet",ifnull(Names.getJson("Square_Feet"),""));
+		mp.put("City",ifnull(Names.getJson("City"),""));
+		mp.put("State",ifnull(Names.getJson("State"),""));
+		mp.put("Street_Name",ifnull(Names.getJson("Street_Name"),""));
+		mp.put("Street_Name",ifnull(Names.getJson("Street_Name"),""));
+		mp.put("Ticket_Notes",ifnull(Names.getJson("Ticket_Notes"),""));
+		mp.put("Contact_Name",ifnull(ifnull(get_data.getJSON("Contact_Name"),Map()).getJSON("name"),""));
+		mp.put("Email",ifnull(get_data.getJson("twiliosmsextension0__Address_For_Email_To_SMS"),""));
+		mp.put("Record",RecordID);
+		create = zoho.crm.createRecord("test",mp);
+		info mp;
+	}
+	//creates map for property email and turns it into no
+	Send_Email = Map();
+	No_Email = "No";
+	Send_Email.put("Send_Property_Email",No_Email);
+	Update = zoho.crm.updateRecord("Deals",Deals_ID,Send_Email);
+}
