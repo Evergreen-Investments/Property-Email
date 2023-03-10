@@ -18,8 +18,6 @@ The property email workflows and functions allow users to add to the related lis
 
 
 3. Once the record is created, a workflow is triggered that sends an email out to the contact email of the deal.
-4. 
-![image](https://user-images.githubusercontent.com/124835926/217657957-6f305653-640c-4887-ba43-a0d6d8d105c2.png)
 
 ![image](https://user-images.githubusercontent.com/124835926/224375369-acc78576-6a52-4c76-9cfd-f39bf047292b.png)
 
