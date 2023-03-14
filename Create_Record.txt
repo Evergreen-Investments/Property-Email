@@ -20,6 +20,10 @@ if(Send_Property_Email == "Yes")
 		//Concatnates deals ID and porperty id to create new id 
 		RecordID = Deals_ID + pid;
 		Names = zoho.crm.getRecordById("PropertyDatabase",pid);
+		//Gets email from Contacts module using the contact id 
+		cid = ifnull(get_data.getJson("Contact_Name").getJson("id"),"");
+		contact = zoho.crm.getRecordById("Contacts",cid);
+		//Creates Map for the new record
 		mp = Map();
 		mp.put("Name",ifnull(Names.getJson("Name"),""));
 		mp.put("Baths",ifnull(Names.getJson("Baths"),""));
@@ -36,7 +40,7 @@ if(Send_Property_Email == "Yes")
 		mp.put("Street_Name",ifnull(Names.getJson("Street_Name"),""));
 		mp.put("Ticket_Notes",ifnull(Names.getJson("Ticket_Notes"),""));
 		mp.put("Contact_Name",ifnull(ifnull(get_data.getJSON("Contact_Name"),Map()).getJSON("name"),""));
-		mp.put("Email",ifnull(get_data.getJson("twiliosmsextension0__Address_For_Email_To_SMS"),""));
+		mp.put("Email",ifnull(contact.getJson("Email"),""));
 		mp.put("Record",RecordID);
 		create = zoho.crm.createRecord("test",mp);
 		info mp;
