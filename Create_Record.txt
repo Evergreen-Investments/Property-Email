@@ -42,6 +42,7 @@ if(Send_Property_Email == "Yes")
 		mp.put("Contact_Name",ifnull(ifnull(get_data.getJSON("Contact_Name"),Map()).getJSON("name"),""));
 		mp.put("Email",ifnull(contact.getJson("Email"),""));
 		mp.put("Record",RecordID);
+		mp.put("Deal",Deals_ID);
 		create = zoho.crm.createRecord("test",mp);
 		info mp;
 	}
